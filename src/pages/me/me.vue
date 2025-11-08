@@ -1,14 +1,7 @@
 <template>
-	<view>
-		我的
-	</view>
+  <view> 我的 </view>
 </template>
 
-<script setup lang="ts">
-	const a:number='sdf'
-	console.log(a)
-</script>
+<script setup lang="ts"></script>
 
-<style>
-	       
-</style>
+<style></style>

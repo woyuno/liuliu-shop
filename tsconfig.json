@@ -15,7 +15,8 @@
       "@uni-helper/uni-app-types", // uni-app 组件类型
       "@uni-helper/uni-ui-types",
       "uview-plus/types"
-    ]
+    ],
+    "verbatimModuleSyntax": true
   },
   // vue 编译器类型，校验标签类型
   "vueCompilerOptions": {
