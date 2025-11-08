@@ -1,4 +1,4 @@
-import { RequestConfig } from "./types"
+import type { RequestConfig } from "./types"
 const getToken = ()=>uni.getStorageSync("token") || ""
 
 

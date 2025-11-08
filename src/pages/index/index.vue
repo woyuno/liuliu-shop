@@ -12,6 +12,8 @@
 				</view>
 			</view>
 		</view>
+
+
 		<view class="content">
 			<swiper class="banner-swiper" indicator-dots autoplay circular indicator-color="rgba(255, 255, 255, 0.6)" indicator-active-color="#fff">
 				<swiper-item v-for="item in bannerList" :key="item.title">
@@ -20,6 +22,7 @@
 					</view>
 				</swiper-item>
 			</swiper>
+
 			<view class="part">
 				<up-scroll-list indicator indicatorColor="#fff0f0" indicatorActiveColor="#ffce2c">
 					<view class="scroll-item" v-for="item in partList" :key="item.title">
@@ -230,13 +233,12 @@
 			console.error(err)
 		}
 	}
-	onReachBottom(()=>{
-		if(currentPage.value<totalPages.value){
-			getMerchantList(currentPage.value+1)
-		}
-	})
+	// onReachBottom(()=>{
+	// 	if(currentPage.value<totalPages.value){
+	// 		getMerchantList(currentPage.value+1)
+	// 	}
+	// })
 </script>
-
 <style lang="scss" scoped>
 	.container {
 		background-color: #f7f7f7;

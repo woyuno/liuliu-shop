@@ -69,6 +69,7 @@
     "@dcloudio/vite-plugin-uni": "3.0.0-4080420251103001",
     "@rushstack/eslint-patch": "^1.14.1",
     "@uni-helper/uni-app-types": "1.0.0-alpha.6",
+    "@uni-helper/uni-ui-types": "^1.0.0-alpha.6",
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.6.0",
     "@vue/runtime-core": "^3.4.21",

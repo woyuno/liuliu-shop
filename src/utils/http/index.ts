@@ -1,4 +1,4 @@
-import { RequestConfig } from "./types";
+import type { RequestConfig } from "./types";
 import { requestInterceptor,transformResponse } from "./interceptors";
 
 function request(config:RequestConfig){
