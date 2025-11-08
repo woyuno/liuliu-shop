@@ -24,7 +24,7 @@
 			</swiper>
 
 			<view class="part">
-				<up-scroll-list indicator indicatorColor="#fff0f0" indicatorActiveColor="#ffce2c">
+				<up-scroll-list indicator indicatorColor="#fff0f0" indicatorActiveColor="#ffce2c" indicatorStyle="null">
 					<view class="scroll-item" v-for="item in partList" :key="item.title">
 						<image :src="item.url" mode="aspectFill"></image>
 						<text>{{item.title}}</text>
