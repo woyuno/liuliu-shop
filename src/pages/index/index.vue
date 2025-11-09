@@ -504,8 +504,8 @@ onReachBottom(() => {
             background-color: rgba(255, 153, 0, 0.1);
           }
 
-          &:nth-child(5) {
-          }
+          // &:nth-child(5) {
+          // }
         }
       }
 
