@@ -50,7 +50,7 @@
     <up-icon name="shopping-cart" color="#ffce2c" size="80rpx"></up-icon>
     <view class="cart-badge" v-if="cartCount > 0">{{ cartCount }}</view>
   </view>
-   <product-spec-popup :show="show" :product="selProduct" @close="show=false"/>
+  <product-spec-popup :show="show" :product="selProduct" @close="handleClose" />
 </template>
 
 <script setup lang="ts">
@@ -61,8 +61,9 @@ import ProductSpecPopup from '@/components/products-spec-popup/product-spec-popu
 
 onLoad(() => {
   getCategories()
+  getCartCount()
 })
-interface CategorItem { 
+interface CategorItem {
   id: number
   category_name: string
 }
@@ -120,7 +121,16 @@ onReachBottom(() => {
 })
 
 // 购物车
-const cartCount = ref<number>(1)
+const cartCount = ref<number>(0)
+const getCartCount = async () => {
+  try {
+    const data: any = await get('/cart/list')
+    console.log(data)
+    cartCount.value = data.length
+  } catch (error) {
+    console.log(error)
+  }
+}
 const goCart = () => {
   // 判断用户是否登录，如果未登录，跳转到登录页
   const token = uni.getStorageSync('token')
@@ -134,10 +144,14 @@ const goCart = () => {
     url: '/pages/cart/cart'
   })
 }
+const handleClose = () => {
+  show.value = false
+  getCartCount()
+}
 // 规格弹窗相关
 const show = ref<boolean>(false)
 const selProduct = ref<ProductItem>({} as ProductItem)
-const addCart = (product:ProductItem)=>{
+const addCart = (product: ProductItem) => {
   show.value = true
   selProduct.value = product
 }
