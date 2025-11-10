@@ -1,5 +1,5 @@
 <template>
-  <view> class="cart">我是购物车</view>
+  <view class="cart">我是购物车</view>
 </template>
 
 <script lang="ts" setup>

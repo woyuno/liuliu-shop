@@ -26,10 +26,18 @@ export const requestInterceptor = (config:RequestConfig)=>{
 // 响应拦截器
 export const transformResponse = (res:any)=>{
 	if(res.statusCode!=200){
-		throw new Error("请求失败")
+		uni.showToast({
+			title:res.data.message,
+			icon:"none"
+		})
+		return
 	}
 	if(!res.data.success){
-		throw new Error("请求失败")
+		uni.showToast({
+			title:res.data.message,
+			icon:"none"
+		})
+		return
 	}
 	return res.data.data
 }

@@ -50,7 +50,7 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "wx55cc884ab998424f",
+        "appid" : "wxd1d01fe323ba839d",
         "mergeVirtualHostAttributes" : true,
         "permission" : {
             "scope.userLocation" : {

@@ -35,7 +35,7 @@
                 <text class="product-name">{{ item.name }}</text>
                 <view class="price-row">
                   <text class="product-price">￥{{ item.price }}</text>
-                  <view class="add-cart">
+                  <view class="add-cart" @click="addCart(item)">
                     <up-icon name="shopping-cart" color="#fff" size="20"></up-icon>
                   </view>
                 </view>
@@ -50,17 +50,19 @@
     <up-icon name="shopping-cart" color="#ffce2c" size="80rpx"></up-icon>
     <view class="cart-badge" v-if="cartCount > 0">{{ cartCount }}</view>
   </view>
+   <product-spec-popup :show="show" :product="selProduct" @close="show=false"/>
 </template>
 
 <script setup lang="ts">
 import { get } from '../../utils/http'
 import { onLoad, onReachBottom } from '@dcloudio/uni-app'
 import { ref } from 'vue'
+import ProductSpecPopup from '@/components/products-spec-popup/product-spec-popup.vue'
 
 onLoad(() => {
   getCategories()
 })
-interface CategorItem {
+interface CategorItem { 
   id: number
   category_name: string
 }
@@ -131,6 +133,13 @@ const goCart = () => {
   uni.navigateTo({
     url: '/pages/cart/cart'
   })
+}
+// 规格弹窗相关
+const show = ref<boolean>(false)
+const selProduct = ref<ProductItem>({} as ProductItem)
+const addCart = (product:ProductItem)=>{
+  show.value = true
+  selProduct.value = product
 }
 </script>
 
