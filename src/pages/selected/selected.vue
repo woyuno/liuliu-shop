@@ -27,10 +27,10 @@
         </scroll-view>
         <!-- 右侧商品 -->
         <scroll-view scroll-y class="category-right">
-          <view class="category-title">{{ categories[currentCategory].category_name }}</view>
+          <view class="category-title">{{ categories[currentCategory]?.category_name }}</view>
           <view class="product-list">
             <view class="product-item" v-for="item in products" :key="item.id">
-              <image :src="item.main_pic" mode="scaleToFill" />
+              <image :src="item.main_pic" mode="aspectFill" @click="goProductDetail(item)" />
               <view class="product-info">
                 <text class="product-name">{{ item.name }}</text>
                 <view class="price-row">
@@ -50,7 +50,7 @@
     <up-icon name="shopping-cart" color="#ffce2c" size="80rpx"></up-icon>
     <view class="cart-badge" v-if="cartCount > 0">{{ cartCount }}</view>
   </view>
-  <product-spec-popup :show="show" :product="selProduct" @close="handleClose" />
+  <product-spec-popup :show="show" :product="selProduct" @close="handleClose" :show-ok="false"/>
 </template>
 
 <script setup lang="ts">
@@ -63,8 +63,8 @@ onLoad(() => {
   getCategories()
 })
 onShow(() => {
-  if(uni.getStorageSync('token')){
-    getCartCount()  
+  if (uni.getStorageSync('token')) {
+    getCartCount()
   }
 })
 interface CategorItem {
@@ -159,9 +159,15 @@ const addCart = (product: ProductItem) => {
   show.value = true
   selProduct.value = product
 }
+// 跳转到详情页:
+const goProductDetail = (product:ProductItem) => {
+  uni.navigateTo({
+    url:`/pages/packageA/product-detail/product-detail?product=${JSON.stringify(product)}`,
+  })
+}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .container {
   background-color: #f7f7f7;
   .header {

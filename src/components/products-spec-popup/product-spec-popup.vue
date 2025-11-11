@@ -31,6 +31,7 @@
               <view class="plus" @click="increase">+</view>
             </view>
           </view>
+          <view class="confirm-ok" v-if="showOk" @click="handleOk">确定</view>
           <view class="confirm-btn" @click="confirmSpec">加购</view>
         </view>
       </view>
@@ -38,6 +39,7 @@
   </up-popup>
 </template>
 <script lang="ts" setup>
+import { useSpecStore } from '@/store/spec'
 import { get, post } from '@/utils/http'
 import { computed, watch } from 'vue'
 import { ref, reactive } from 'vue'
@@ -63,7 +65,13 @@ interface SpecArr {
   attr_name: string
   values: SpecValue[]
 }
-const props = defineProps<{ show: boolean; product: ProductItem }>()
+
+const specStore = useSpecStore()
+const props = defineProps<{
+  show: boolean
+  product: ProductItem
+  showOk: boolean
+}>()
 const emit = defineEmits(['close'])
 // 获取商品规格
 watch(
@@ -95,7 +103,7 @@ const getSpec = async () => {
 
 const selectedSpecs = reactive<{ [key: string]: number }>({})
 const selectedTexts = reactive<{ [key: string]: string }>({})
-const selectedSpec = ref<String>('')
+const selectedSpec = ref<string>('')
 const selectSpec = (attr_id: number, value_id: number, value: string) => {
   selectedSpecs[attr_id] = value_id
   selectedTexts[attr_id] = value
@@ -156,10 +164,26 @@ const confirmSpec = async () => {
       title: '加购成功',
       icon: 'success'
     })
+    specStore.setSpec('')
+    specStore.setCount(1)
     handleClose()
   } catch (error) {
     console.log(error)
   }
+}
+//点击确定按钮，将数据存在pinia
+const handleOk = () => {
+  const allSelected: boolean = specList.value.every(group => selectedSpecs[group.attr_id])
+  if (!allSelected) {
+    uni.showToast({
+      title: '请选择完整规格',
+      icon: 'error'
+    })
+    return
+  }
+  specStore.setSpec(selectedSpec.value)
+  specStore.setCount(quantity.value)
+  handleClose()
 }
 </script>
 <style lang="scss" scoped>
@@ -254,6 +278,17 @@ const confirmSpec = async () => {
             line-height: 60rpx;
           }
         }
+      }
+      .confirm-ok {
+        width: 140rpx;
+        height: 80rpx;
+        border: $uni-color-primary 1px solid;
+        color: $uni-color-primary;
+        border-radius: 80rpx;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28rpx;
       }
       .confirm-btn {
         width: 240rpx;
