@@ -55,13 +55,17 @@
 
 <script setup lang="ts">
 import { get } from '../../utils/http'
-import { onLoad, onReachBottom } from '@dcloudio/uni-app'
+import { onLoad, onReachBottom, onShow } from '@dcloudio/uni-app'
 import { ref } from 'vue'
 import ProductSpecPopup from '@/components/products-spec-popup/product-spec-popup.vue'
 
 onLoad(() => {
   getCategories()
-  getCartCount()
+})
+onShow(() => {
+  if(uni.getStorageSync('token')){
+    getCartCount()  
+  }
 })
 interface CategorItem {
   id: number
