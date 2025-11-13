@@ -35,7 +35,7 @@
 
       <view class="part">
         <up-scroll-list indicator indicatorColor="#fff0f0" indicatorActiveColor="#ffce2c" indicatorStyle="null">
-          <view class="scroll-item" v-for="item in partList" :key="item.title">
+          <view class="scroll-item" v-for="item in partList" :key="item.title" @click="goMerchant(item.title)">
             <image :src="item.url" mode="aspectFill"></image>
             <text>{{ item.title }}</text>
           </view>
@@ -78,7 +78,6 @@
           </view>
         </view>
       </view>
-
       <view class="service-card" v-for="item in merchantList" :key="item.merchant_id">
         <image class="service-img" :src="item.pic" mode="aspectFill"></image>
         <view class="service-info">
@@ -250,6 +249,11 @@ onReachBottom(() => {
     getMerchantList(currentPage.value + 1)
   }
 })
+const goMerchant = (title: string) => {
+  uni.navigateTo({
+    url: '/packageB/merchant/merchant?keyword=' + title
+  })
+}
 </script>
 <style lang="scss" scoped>
 .container {
