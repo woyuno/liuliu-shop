@@ -63,7 +63,9 @@
       <uni-list-item title="设置" showArrow></uni-list-item>
       <uni-list-item title="帮助中心" showArrow></uni-list-item>
       <uni-list-item title="关于我们" showArrow></uni-list-item>
-      <uni-list-item title="地址管理" showArrow></uni-list-item>
+      <view @click="goAddress">
+        <uni-list-item title="地址管理" showArrow></uni-list-item>
+      </view>
       <uni-list-item title="联系我们" showArrow></uni-list-item>
       <view @click="handleLogout">
         <uni-list-item title="退出" showArrow></uni-list-item>
@@ -113,6 +115,11 @@ const handleLogout = () => {
         })
       }
     }
+  })
+}
+const goAddress = () => {
+  uni.navigateTo({
+    url: '/packageB/address/address'
   })
 }
 </script>
