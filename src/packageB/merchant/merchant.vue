@@ -24,7 +24,7 @@
     <view class="tabs">
       <up-tabs :list="list1" v-model:current="currentIndex" @click="handleSelect"></up-tabs>
     </view>
-    <view class="service-card" v-for="item in merchantList" :key="item.merchant_id">
+    <view class="service-card" v-for="item in merchantList" :key="item.merchant_id" @click="goDetail(item)">
       <image class="service-img" :src="item.pic" mode="aspectFill"></image>
       <view class="service-info">
         <text class="service-name">{{ item.merchant_name }}</text>
@@ -153,6 +153,12 @@ const handleSearch = () => {
   params.keyword = ''
   currentIndex.value = 0
   getMerchantList(1)
+}
+
+const goDetail = (item: MerchantItem) => {
+  uni.navigateTo({
+    url: `/packageB/merchant-detail/merchant-detail?info=${JSON.stringify(item)}`
+  })
 }
 </script>
 <style lang="scss" scoped>

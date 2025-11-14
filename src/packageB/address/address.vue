@@ -2,7 +2,7 @@
   <view class="address-page">
     <!-- 地址列表 -->
     <view class="address-list" v-if="addressList?.length">
-      <view class="address-item" v-for="item in addressList" :key="item.id">
+      <view class="address-item" v-for="item in addressList" :key="item.id" @click="selectAddress(item)">
         <view class="address-info">
           <view class="content-info">
             <text class="name">{{ item.name }}</text>
@@ -12,10 +12,10 @@
           <view class="address-detail">{{ item.province }}{{ item.city }}{{ item.district }}{{ item.detail }}</view>
         </view>
         <view class="address-actions">
-          <view class="acton-btn" @click="editAddress(item)">
+          <view class="acton-btn" @click.stop="editAddress(item)">
             <up-icon name="edit-pen" size="20" color="#666"></up-icon>
           </view>
-          <view class="acton-btn" @click="deleteAddress(item.id)">
+          <view class="acton-btn" @click.stop="deleteAddress(item.id)">
             <up-icon name="trash" size="20" color="#666"></up-icon>
           </view>
         </view>
@@ -99,8 +99,9 @@ interface AddressForm {
   detail: string
   is_default: 1 | 0
 }
-onLoad(() => {
+onLoad((options: any) => {
   getAddressList()
+  flag.value = options.flag
 })
 const addressList = ref<AddressItem[]>([])
 const getAddressList = async () => {
@@ -282,8 +283,14 @@ const saveAddress = async () => {
     console.log(error)
   }
 }
+const flag = ref<string>('') //是不是从订单页面来的
+const selectAddress = (item: AddressItem) => {
+  if (flag) {
+    uni.$emit('addressSelected', item)
+    uni.navigateBack()
+  }
+}
 </script>
-
 <style lang="scss" scoped>
 .address-page {
   min-height: 100vh;

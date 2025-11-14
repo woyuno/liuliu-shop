@@ -38,7 +38,7 @@
         </view>
         <view class="total-desc">不含运费</view>
       </view>
-      <view class="settle-btn" :class="{ active: selectedCount > 0 }">结算({{ selectedCount }})</view>
+      <view class="settle-btn" :class="{ active: selectedCount > 0 }" @click="goOrder">结算({{ selectedCount }})</view>
     </view>
   </view>
 </template>
@@ -58,7 +58,7 @@ interface CartItem {
   main_pic: string
   name: string
   price: string
-  product_id: number
+  product_id: number 
   spec: string
   user_id: number
   selected: boolean
@@ -131,6 +131,16 @@ const deleteItem = (cart_id: number) => {
       }
     }
   })
+}
+const selPro = computed(() => {
+  return cartList.value.filter(item => item.selected)
+})
+const goOrder = () => {
+  if (selectedCount.value) {
+    uni.navigateTo({
+      url: '/packageB/order/order?selPro=' + JSON.stringify(selPro.value)
+    })
+  }
 }
 </script>
 <style lang="scss" scoped>

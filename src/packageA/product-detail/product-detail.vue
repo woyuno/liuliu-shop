@@ -18,7 +18,7 @@
     <view class="spec-section" @click="showSpecPopup">
       <text class="label">规格</text>
       <view class="selected-spec">
-        <text>{{ selectedSped || '请选择规格' }}</text>
+        <text>{{ selectedSpec || '请选择规格' }}</text>
         <up-icon name="arrow-right" size="20" color="#999"></up-icon>
       </view>
     </view>
@@ -70,6 +70,14 @@ interface ProductImage {
   product_id: number
   img_url: string
 }
+interface OrderItem {
+  count: number
+  main_pic: string
+  name: string
+  price: number
+  product_id: number
+  spec: string
+}
 const specStore = useSpecStore()
 onLoad((options: any) => {
   productInfo.value = JSON.parse(options.product)
@@ -99,14 +107,18 @@ const handleClose = () => {
   show.value = false
 }
 // 从pinia中取出规格数据
-const selectedSped = computed(() => {
+const selectedSpec = computed(() => {
   return specStore.specText
 })
 const selCount = computed(() => {
   return specStore.count
 })
+const selTotal = computed(() => {
+  console.log('rrr',specStore.total)
+  return specStore.total
+})
 const addCart = async () => {
-  if (selectedSped.value) {
+  if (selectedSpec.value) {
     // 加入购物车
     try {
       const res = await post('/cart/addCart', {
@@ -114,7 +126,7 @@ const addCart = async () => {
         name: productInfo.value.name,
         price: productInfo.value.price,
         count: selCount.value,
-        spec: selectedSped.value,
+        spec: selectedSpec.value,
         main_pic: productInfo.value.main_pic
       })
       uni.showToast({
@@ -132,8 +144,20 @@ const addCart = async () => {
   }
 }
 const buyNow = () => {
-  if (selectedSped.value) {
-    // 买
+  if (selectedSpec.value) {
+    const selPro: OrderItem[] = [
+      {
+        count: selCount.value,
+        main_pic: productInfo.value.main_pic,
+        name: productInfo.value.name,
+        price: selTotal.value,
+        product_id: productInfo.value.id,
+        spec: selectedSpec.value
+      }
+    ]
+    uni.navigateTo({
+      url: '/packageB/order/order?selPro=' + JSON.stringify(selPro)
+    })
   } else {
     showSpecPopup()
   }

@@ -153,7 +153,7 @@ const confirmSpec = async () => {
   }
   try {
     const res = await post('/cart/addCart', {
-      product_id: props.product.id,
+      product_id: props.product.id, 
       name: props.product.name,
       price: finalPrice.value,
       count: quantity.value,
@@ -183,6 +183,7 @@ const handleOk = () => {
   }
   specStore.setSpec(selectedSpec.value)
   specStore.setCount(quantity.value)
+  specStore.setTotal(finalPrice.value)
   handleClose()
 }
 </script>
